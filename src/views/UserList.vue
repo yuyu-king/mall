@@ -11,7 +11,7 @@
           <el-input placeholder="请输入搜索内容" suffix-icon="el-icon-search"></el-input>
         </el-col>
         <el-col :span="6">
-          <el-button type="primary">主要按钮</el-button>
+          <el-button type="primary">添加用户</el-button>
         </el-col>
       </el-row>
       <el-table :data="tableData.userList" style="width: 100%">
@@ -21,6 +21,10 @@
         </el-table-column>
         <el-table-column prop="address" label="地址">
         </el-table-column>
+      <el-table-column label="操作">
+        <el-button type="primary" icon="el-icon-edit" circle size="mini"></el-button>
+        <el-button type="danger" icon="el-icon-delete" circle size="mini"></el-button>
+      </el-table-column>
       </el-table>
     </el-card>
   </div>

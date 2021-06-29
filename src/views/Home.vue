@@ -59,6 +59,7 @@
   }
   .brand{
     color: #fff;
+    text-decoration: none;
   }
   .brand:hover {
     cursor: pointer;

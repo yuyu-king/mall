@@ -21,6 +21,6 @@ Mock.mock('/login', 'post', (options) => {
 })
 
 Mock.mock('/getUserList', 'post', (options) => {
-  console.log(UserList.result)
+  // console.log(UserList.result)
   return UserList.result
 })
