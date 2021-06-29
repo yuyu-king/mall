@@ -19,50 +19,50 @@
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      loading: false,
-      form: {
-        username: '',
-        password: ''
+  export default {
+    data() {
+      return {
+        loading: false,
+        form: {
+          username: '',
+          password: ''
+        },
+        loginFormRules: {
+          username: [
+            { required: true, message: '请输入用户名', trigger: 'blur' },
+            { min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur' }
+          ],
+          password: [
+            { required: true, message: '请输入密码', trigger: 'blur' },
+            { min: 6, max: 16, message: '长度在 6 到 16 个字符', trigger: 'blur' }
+          ]
+        }
+      }
+    },
+    methods: {
+      onSubmit() {
+        console.log('submit!')
+        console.log(this.loading)
+        this.loading = true
+        this.$refs.form.validate(async valid => {
+          if (!valid) return (this.loading = false)
+          const {
+            data: res
+          } = await this.$axios.post('/login', this.form)
+          console.log(res)
+          if (res.code !== 200) {
+            this.loading = false
+            return this.$message.error('用户或密码输入错误!!!')
+          }
+          sessionStorage.setItem('token', res.result.apikey)
+          this.$router.push('/home')
+        })
       },
-      loginFormRules: {
-        username: [
-          { required: true, message: '请输入用户名', trigger: 'blur' },
-          { min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur' }
-        ],
-        password: [
-          { required: true, message: '请输入密码', trigger: 'blur' },
-          { min: 6, max: 16, message: '长度在 6 到 16 个字符', trigger: 'blur' }
-        ]
+      reset() {
+        this.$refs.form.resetFields()
       }
     }
-  },
-  methods: {
-    onSubmit() {
-      console.log('submit!')
-      console.log(this.loading)
-      this.loading = true
-      this.$refs.form.validate(async valid => {
-        if (!valid) return (this.loading = false)
-        const {
-          data: res
-        } = await this.$axios.post('/login', this.form)
-        console.log(res)
-        if (res.code !== 200) {
-          this.loading = false
-          return this.$message.error('用户或密码输入错误!!!')
-        }
-        sessionStorage.setItem('token', res.result.apikey)
-        this.$router.push('/loginx')
-      })
-    },
-    reset() {
-      this.$refs.form.resetFields()
-    }
   }
-}
 </script>
 
 <style scoped="scoped">
