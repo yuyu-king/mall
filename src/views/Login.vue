@@ -1,7 +1,7 @@
 <template>
   <div class="login-container">
     <el-form :model="form" ref="form" class="login-page">
-      <h3 class="title">系统登录</h3>
+      <h3 class="title">系统登录1</h3>
       <el-form-item>
         <el-input type="text" v-model="form.name" auto-complete="off" placeholder="账号"></el-input>
       </el-form-item>
