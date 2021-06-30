@@ -4,7 +4,6 @@ import UserList from './userList.json'
 
 Mock.mock('/login', 'post', (options) => {
   const user = JSON.parse(options.body)
-  console.log(user)
   if (user.username === UserData.result.username && user.password === UserData.result.password) {
     return {
       code: 200,

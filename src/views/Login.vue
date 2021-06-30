@@ -8,7 +8,7 @@
       </el-form-item>
       <el-form-item prop="password">
         <el-input type="password" v-model="form.password" auto-complete="off" placeholder="密码"
-          prefix-icon="el-icon-unlock"></el-input>
+          prefix-icon="el-icon-unlock" @keyup.enter.native="onSubmit"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit" :loading="loading">登录</el-button>
@@ -47,7 +47,6 @@
           const {
             data: res
           } = await this.$axios.post('/login', this.form)
-          console.log(res)
           if (res.code !== 200) {
             this.loading = false
             return this.$message.error('用户或密码输入错误!!!')
