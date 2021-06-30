@@ -6,13 +6,14 @@
     </el-header>
     <el-container class="sec">
       <el-aside width="150px">
-        <el-menu default-active="userlist" :unique-opened="true"
-          router>
-          <el-menu-item index="userlist">
+        <el-menu :default-active="defaultActive"
+        :unique-opened="true"
+        router>
+          <el-menu-item index="/userlist">
             <i class="el-icon-s-custom"></i>
             <span slot="title">用户列表</span>
           </el-menu-item>
-          <el-menu-item index="#">
+          <el-menu-item index="/goodslist">
             <i class="el-icon-s-goods"></i>
             <span slot="title">商品列表</span>
           </el-menu-item>
@@ -27,10 +28,21 @@
 
 <script>
   export default {
+    data() {
+      return {
+        defaultActive: ''
+      }
+    },
+    created() {
+      this.changeDefaultActive(this.$route.path)
+    },
     methods: {
       logout() {
         sessionStorage.removeItem('token')
         this.$router.push('/login')
+      },
+      changeDefaultActive(val) {
+        this.defaultActive = val
       }
     }
   }

@@ -41,8 +41,6 @@
     },
     methods: {
       onSubmit() {
-        console.log('submit!')
-        console.log(this.loading)
         this.loading = true
         this.$refs.form.validate(async valid => {
           if (!valid) return (this.loading = false)

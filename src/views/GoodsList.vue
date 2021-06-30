@@ -1,8 +1,8 @@
 <template>
   <div>
     <el-breadcrumb separator="/">
-      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item><a href="/">用户管理</a></el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/userlist' }">用户管理</el-breadcrumb-item>
       <el-breadcrumb-item>用户列表</el-breadcrumb-item>
     </el-breadcrumb>
     <el-card class="box-card">
@@ -27,10 +27,14 @@
         </el-table-column>
       </el-table>
       <div class="block">
-        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
-          :current-page="queryInfo.currentpage" :page-sizes="[2, 4]" :page-size="queryInfo.pagesize"
-          layout="total, sizes, prev, pager, next" :total="tableData.total">
-        </el-pagination>
+<!--        <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="queryInfo.currentpage"
+        :page-sizes="[2, 4]"
+        :page-size="queryInfo.pagesize"
+        layout="total, sizes, prev, pager, next" :total="tableData.total">
+        </el-pagination> -->
       </div>
     </el-card>
   </div>
@@ -40,13 +44,8 @@
   export default {
     data() {
       return {
-        queryInfo: {
-          currentpage: 1,
-          pagesize: 2
-        },
         tableData: {
-          userList: [],
-          total: 0
+          userList: []
         }
       }
     },
@@ -55,22 +54,11 @@
     },
     methods: {
       async getUserList() {
-        const {
-          data: res
-        } = await this.$axios.post('/getUserList', this.queryInfo)
-        console.log(res)
-        this.tableData.userList = res.result
-        this.tableData.total = 8
-      },
-      handleSizeChange(size) {
-        // console.log(size)
-        this.queryInfo.pagesize = size
-        this.getUserList()
-      },
-      handleCurrentChange(page) {
-        // console.log(page)
-        this.queryInfo.currentpage = page
-        this.getUserList()
+        // const {
+        //   data: res
+        // } = await this.$axios.post('/getUserList', {})
+        // // console.log(res)
+        // this.tableData.userList = res
       }
     }
   }
@@ -79,9 +67,5 @@
 <style>
   .box-card {
     margin-top: 15px;
-  }
-
-  .block {
-    margin-top: 5px;
   }
 </style>

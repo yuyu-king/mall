@@ -19,18 +19,35 @@ const routes = [
     path: '/home',
     name: 'Home',
     component: () => import('../views/Home.vue'),
-    children: [{
-      path: '/userlist',
-      name: 'UserList',
-      component: () => import('../views/UserList.vue')
-    }]
+    children: [
+      {
+        path: '/userlist',
+        name: 'UserList',
+        component: () => import('../views/UserList.vue')
+      },
+      {
+        path: '/goodslist',
+        name: 'GoodsList',
+        component: () => import('../views/GoodsList.vue')
+      }
+    ]
   }
 ]
-
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
 })
+
+// router.beforeEach((to, from, next) => {
+//   const token = sessionStorage.getItem('token')
+//   if (to.path === '/login' && token) {
+//     return next('/home')
+//   } else if (to.path !== '/login' && !token) {
+//     return next('/login')
+//   } else {
+//     return next()
+//   }
+// })
 
 export default router
