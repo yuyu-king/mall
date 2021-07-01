@@ -44,15 +44,13 @@
         this.loading = true
         this.$refs.form.validate(async valid => {
           if (!valid) return (this.loading = false)
-          const {
-            data: res
-          } = await this.$axios.post('/login', this.form)
+          const { data: res } = await this.$axios.post('/backlogin', this.form)
           if (res.code !== 200) {
             this.loading = false
             return this.$message.error('用户或密码输入错误!!!')
           }
-          sessionStorage.setItem('token', res.result.apikey)
-          this.$router.push('/home')
+          sessionStorage.setItem(res.result.token, res.result.id)
+          this.$router.push('/back/home')
         })
       },
       reset() {
