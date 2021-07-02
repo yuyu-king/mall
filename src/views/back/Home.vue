@@ -42,7 +42,7 @@
     },
     methods: {
       logout() {
-        sessionStorage.removeItem('token')
+        sessionStorage.removeItem('adminId')
         this.$router.push({ name: 'bLogin' })
       },
       changeDefaultActive(val) {

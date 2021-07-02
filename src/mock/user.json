@@ -1,9 +1,0 @@
-{
-	"code": 200,
-	"message": "成功!",
-	"result": {
-		"username": "yuyu",
-		"password": "123456",
-		"apikey": "b9b3a96f7554e3bead2eccf16506c13e"
-	}
-}
