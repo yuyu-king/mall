@@ -11,26 +11,41 @@ const routes = [
     component: Welcome
   },
   {
-    path: '/backend/login',
+    path: '/back/login',
     name: 'bLogin',
     component: () => import('../views/back/Login.vue')
   },
   {
-    path: '/home',
-    name: 'Home',
-    component: () => import('../views/Home.vue'),
+    path: '/back/home',
+    name: 'bHome',
+    component: () => import('../views/back/Home.vue'),
     children: [
       {
-        path: '/userlist',
-        name: 'UserList',
-        component: () => import('../views/UserList.vue')
+        path: '/back/user',
+        name: 'bUser',
+        component: () => import('../views/back/User.vue')
       },
       {
-        path: '/goodslist',
-        name: 'GoodsList',
-        component: () => import('../views/GoodsList.vue')
+        path: '/back/goods',
+        name: 'bGoods',
+        component: () => import('../views/back/Goods.vue')
+      },
+      {
+        path: '/back/order',
+        name: 'bOrder',
+        component: () => import('../views/back/Order.vue')
       }
     ]
+  },
+  {
+    path: '/login',
+    name: 'fLogin',
+    component: () => import('../views/front/Login.vue')
+  },
+  {
+    path: '/Register',
+    name: 'fregister',
+    component: () => import('../views/front/Register.vue')
   }
 ]
 const router = new VueRouter({

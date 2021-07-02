@@ -49,7 +49,13 @@
             this.loading = false
             return this.$message.error('用户或密码输入错误!!!')
           }
-          sessionStorage.setItem(res.result.token, res.result.id)
+          // 服务端使用localStorage模拟存放token
+          localStorage.setItem(res.result.token, res.result.id)
+          // 客户端使用cookie储存token
+          const exp = new Date()
+          exp.setTime(exp.getTime() + 30 * 60 * 1000)
+          document.cookie = res.result.token + '=' + res.result.id +
+            '; expires=' + exp
           this.$router.push('/back/home')
         })
       },

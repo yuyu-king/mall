@@ -1,7 +1,7 @@
 <template>
   <el-container class="container">
     <el-header>
-      <router-link to="/home" class="brand">电商后台管理系统</router-link>
+      <router-link :to="{name: 'bHome'}" class="brand">电商后台管理系统</router-link>
       <el-button icon="el-icon-s-release" circle @click="logout"></el-button>
     </el-header>
     <el-container class="sec">
@@ -9,13 +9,17 @@
         <el-menu :default-active="defaultActive"
         :unique-opened="true"
         router>
-          <el-menu-item index="/userlist">
+          <el-menu-item index="/back/user">
             <i class="el-icon-s-custom"></i>
             <span slot="title">用户列表</span>
           </el-menu-item>
-          <el-menu-item index="/goodslist">
+          <el-menu-item index="/back/goods">
             <i class="el-icon-s-goods"></i>
             <span slot="title">商品列表</span>
+          </el-menu-item>
+          <el-menu-item index="/back/order">
+            <i class="el-icon-s-order"></i>
+            <span slot="title">订单列表</span>
           </el-menu-item>
         </el-menu>
       </el-aside>
@@ -39,7 +43,7 @@
     methods: {
       logout() {
         sessionStorage.removeItem('token')
-        this.$router.push('/login')
+        this.$router.push({ name: 'bLogin' })
       },
       changeDefaultActive(val) {
         this.defaultActive = val

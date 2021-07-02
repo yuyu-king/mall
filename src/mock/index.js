@@ -7,7 +7,7 @@ Mock.mock('/backlogin', 'post', (options) => {
   const body = JSON.parse(options.body)
   const user = admin.find(e =>
     e.username === body.username && e.password === body.password)
-  if (user) return res.LOGINSUCCESS
+  if (user) return res.backLogin(user.id)
   else return res.LOGINFAIL
 })
 

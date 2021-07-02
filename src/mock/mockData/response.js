@@ -1,15 +1,20 @@
-const LOGINSUCCESS = {
-  code: 200,
-  result: {
-    token: 'a76261bb-a5c5-4a4b-813f-347bbcecfa77',
-    id: 1
+const backLogin = function(id) {
+  const data = {
+    code: 200,
+    result: {
+      token: '',
+      id: ''
+    }
   }
+  data.result.token = 'token' + id
+  data.result.id = id
+  return data
 }
 const LOGINFAIL = {
   code: 404,
   result: {}
 }
 export default {
-  LOGINSUCCESS,
+  backLogin,
   LOGINFAIL
 }
