@@ -4,28 +4,27 @@ import data from './data.js'
 // 后端登录验证
 Mock.mock('/backlogin', 'post', (options) => {
   const body = JSON.parse(options.body)
-  const user = data.adminList.find(e =>
+  const res = data.adminList
+  const user = res.result.find(e =>
     e.username === body.username && e.password === body.password)
   if (user) {
-    sessionStorage.setItem('adminId', user.id)
-    return data.LoginSuccess
+    sessionStorage.setItem('adminName', user.username)
+    return res
   } else return data.LoginFail
 })
 
 Mock.mock('/getUserList', 'post', (options) => {
   const body = JSON.parse(options.body)
-  console.log(body)
-  let userlist = data.userList.result
-  // let userlist = JSON.parse(sessionStorage.getItem('userlist'))
-  // if (userlist == null) {
-  //   userlist = data.userList.result
-  //   sessionStorage.setItem('userlist', JSON.stringify(userlist))
-  // }
-  console.log(userlist)
+  let res = JSON.parse(sessionStorage.getItem('userlist'))
+  if (res == null) {
+    res = data.userList
+    sessionStorage.setItem('userlist', JSON.stringify(res))
+  }
   const offset = (body.currentpage - 1) * body.pagesize
-  userlist = userlist.filter(data => !body.search || data.username.toLowerCase().includes(body.search.toLowerCase()))
-  console.log(userlist.slice(offset, offset + body.pagesize))
-  return data.userList
+  res.result = res.result.filter(data => !body.search || data.username.toLowerCase().includes(body.search.toLowerCase()))
+  res.total = res.result.length
+  res.result = res.result.slice(offset, offset + body.pagesize)
+  return res
 })
 // Mock.mock('/deleteUserById', 'post', (options) => {
 //   const id = JSON.parse(options.body).id

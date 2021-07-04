@@ -2,6 +2,7 @@
   <el-container class="container">
     <el-header>
       <router-link :to="{name: 'bHome'}" class="brand">电商后台管理系统</router-link>
+      <span>欢迎用户：{{username}}</span>
       <el-button icon="el-icon-s-release" circle @click="logout"></el-button>
     </el-header>
     <el-container class="sec">
@@ -34,15 +35,17 @@
   export default {
     data() {
       return {
-        defaultActive: ''
+        defaultActive: '',
+        username: ''
       }
     },
     created() {
       this.changeDefaultActive(this.$route.path)
+      this.username = sessionStorage.getItem('adminName')
     },
     methods: {
       logout() {
-        sessionStorage.removeItem('adminId')
+        sessionStorage.removeItem('adminName')
         this.$router.push({ name: 'bLogin' })
       },
       changeDefaultActive(val) {

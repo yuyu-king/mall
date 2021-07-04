@@ -8,7 +8,7 @@
       </el-form-item>
       <el-form-item prop="password">
         <el-input type="password" v-model="form.password" auto-complete="off" placeholder="密码"
-          prefix-icon="el-icon-unlock" @keyup.enter.native="onSubmit"></el-input>
+          prefix-icon="el-icon-unlock" @keyup.enter.native="onSubmit" show-password></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit" :loading="loading">登录</el-button>
