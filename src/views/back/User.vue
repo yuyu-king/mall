@@ -7,16 +7,19 @@
     <el-card class="box-card">
       <el-row :gutter="10" class="search">
         <el-col :span="6">
-          <el-input v-model="query.username" placeholder="用户名" suffix-icon="el-icon-search"></el-input>
+          <el-input v-model="query.username" placeholder="用户名" suffix-icon="el-icon-search" @blur.prevent="getUserList"></el-input>
         </el-col>
         <el-col :span="6">
-          <el-input v-model="query.name" placeholder="姓名" suffix-icon="el-icon-search"></el-input>
+          <el-input v-model="query.name" placeholder="姓名" suffix-icon="el-icon-search" @blur.prevent="getUserList"></el-input>
         </el-col>
         <el-col :span="6">
-          <el-input v-model="query.address" placeholder="地址" suffix-icon="el-icon-search"></el-input>
+          <el-input v-model="query.address" placeholder="地址" suffix-icon="el-icon-search" @blur.prevent="getUserList"></el-input>
         </el-col>
         <el-col :span="6">
-          <el-input v-model="query.state" placeholder="状态" suffix-icon="el-icon-search"></el-input>
+          <el-select v-model="query.state" placeholder="状态" >
+              <el-option label="可用" value="true" @click.native="getUserList"></el-option>
+              <el-option label="禁用" value="false" @click.native="getUserList"></el-option>
+          </el-select>
         </el-col>
       </el-row>
       <el-table :data="tableData" v-loading="loading" style="width: 100%">
@@ -30,7 +33,7 @@
         </el-table-column>
         <el-table-column prop="state" label="可使用">
           <template slot-scope="scope">
-            <el-switch v-model="scope.row.state"></el-switch>
+            <el-switch v-model="scope.row.state" @change="changeState(scope.row)"></el-switch>
           </template>
         </el-table-column>
       </el-table>
@@ -53,7 +56,7 @@
     data() {
       return {
         query: {
-          search: '',
+          username: '',
           name: '',
           address: '',
           state: '',
@@ -78,7 +81,6 @@
           this.loading = false
           return this.$message.error('查询失败')
         }
-        console.log(res)
         this.loading = false
         this.tableData = res.result
         this.total = res.total
@@ -90,6 +92,14 @@
       handleCurrentChange(page) {
         this.query.currentpage = page
         this.getUserList()
+      },
+      changeState(row) {
+        const {
+          data: res
+        } = this.$axios.post('/changeUserState', row)
+        if (res.code !== 200) {
+          return this.$message.error('修改失败')
+        }
       }
     }
   }

@@ -21,42 +21,23 @@ Mock.mock('/getUserList', 'post', (options) => {
     sessionStorage.setItem('userlist', JSON.stringify(res))
   }
   const offset = (body.currentpage - 1) * body.pagesize
-  res.result = res.result.filter(data => !body.search || data.username.toLowerCase().includes(body.search.toLowerCase()))
+  const state = body.state === 'true'
+  res.result = res.result.filter(data =>
+    (!body.username || data.username.toLowerCase().includes(body.username.toLowerCase())) &&
+    (!body.name || data.name.toLowerCase().includes(body.name.toLowerCase())) &&
+    (!body.address || data.address.toLowerCase().includes(body.address.toLowerCase())) &&
+    (!body.state || data.state === state))
   res.total = res.result.length
   res.result = res.result.slice(offset, offset + body.pagesize)
   return res
 })
-// Mock.mock('/deleteUserById', 'post', (options) => {
-//   const id = JSON.parse(options.body).id
-//   let userlist = JSON.parse(sessionStorage.getItem('userlist'))
-//   userlist = userlist.filter((value, index, array) => {
-//     return value.id !== id
-//   })
-//   sessionStorage.setItem('userlist', JSON.stringify(userlist))
-//   return userlist
-// })
-// Mock.mock('/addUser', 'post', (options) => {
-//   const body = JSON.parse(options.body)
-//   const userlist = JSON.parse(sessionStorage.getItem('userlist'))
-//   const id = userlist[userlist.length - 1].id + 1
-//   const user = {
-//     id,
-//     username: body.username,
-//     address: body.address
-//   }
-//   userlist.push(user)
-//   sessionStorage.setItem('userlist', JSON.stringify(userlist))
-//   return userlist
-// })
-// Mock.mock('/editUserById', 'post', (options) => {
-//   const body = JSON.parse(options.body)
-//   const userlist = JSON.parse(sessionStorage.getItem('userlist'))
-//   userlist.forEach(value => {
-//     if (value.id === body.id) {
-//       value.username = body.username
-//       value.address = body.address
-//     }
-//   })
-//   sessionStorage.setItem('userlist', JSON.stringify(userlist))
-//   return userlist
-// })
+Mock.mock('/changeUserState', 'post', (options) => {
+  const body = JSON.parse(options.body)
+  const id = body.id
+  const state = body.state
+  const userlist = JSON.parse(sessionStorage.getItem('userlist'))
+  userlist.result.find(user => user.id === id).state = state
+  userlist.code = 200
+  sessionStorage.setItem('userlist', JSON.stringify(userlist))
+  return userlist
+})
